@@ -5,13 +5,12 @@ COPY requirements.txt /temp/requirements.txt
 COPY service /service
 WORKDIR /service
 EXPOSE 8000
+RUN apk add postgresql-client build-base postgresql-dev
 
 # Add none root user
-# RUN adduser --disabled-password service-adduser
 RUN     apk add doas; \
         adduser --disabled-password service-adduser; \
         echo 'permit service-adduser as root' > /etc/doas.d/doas.conf
-# USER baeldung
 
 
 RUN pip install -r /temp/requirements.txt
